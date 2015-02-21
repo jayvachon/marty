@@ -1,0 +1,4 @@
+keys/
+wallets/
+*.sublime-project
+*.sublime-workspace
