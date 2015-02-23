@@ -1,0 +1,11 @@
+{
+	"currencies": [
+		{	
+			"issuer_name": "BitStamp",
+			"issuer_address": "",
+			"currency": "USD",
+			"exchange_ref": "BUS",
+			"char_ref": "a"
+		}
+	]
+}
