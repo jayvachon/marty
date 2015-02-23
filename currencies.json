@@ -2,10 +2,92 @@
 	"currencies": [
 		{	
 			"issuer_name": "BitStamp",
-			"issuer_address": "",
+			"issuer_address": "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
 			"currency": "USD",
 			"exchange_ref": "BUS",
 			"char_ref": "a"
 		}
+
+		{	
+			"issuer_name": "BitStamp",
+			"issuer_address": "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B",
+			"currency": "BTC",
+			"exchange_ref": "BBT",
+			"char_ref": "b"
+		}
+
+		{	
+			"issuer_name": "SnapSwap",
+			"issuer_address": "rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q",
+			"currency": "USD",
+			"exchange_ref": "SUS",
+			"char_ref": "c"
+		}
+
+		{	
+			"issuer_name": "SnapSwap",
+			"issuer_address": "rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q",
+			"currency": "BTC",
+			"exchange_ref": "SBT",
+			"char_ref": "d"
+		}
+
+		{	
+			"issuer_name": "SnapSwap",
+			"issuer_address": "rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q",
+			"currency": "EUR",
+			"exchange_ref": "SEU",
+			"char_ref": "e"
+		}
+
+		{	
+			"issuer_name": "TokyoJPY",
+			"issuer_address": "r94s8px6kSw1uZ1MV98dhSRTvc6VMPoPcN",
+			"currency": "JPY",
+			"exchange_ref": "TJP",
+			"char_ref": "f"
+		}
+
+		{	
+			"issuer_name": "RippleCN",
+			"issuer_address": "rnuF96W4SZoCJmbHYBFoJZpR8eCaxNvekK",
+			"currency": "CNY",
+			"exchange_ref": "RCN",
+			"char_ref": "g"
+		}
+
+		{	
+			"issuer_name": "RippleTradeJapan",
+			"issuer_address": "rMAz5ZnK73nyNUL4foAvaxdreczCkG3vA6",
+			"currency": "JPY",
+			"exchange_ref": "RJP",
+			"char_ref": "h"
+		}
+
+		{	
+			"issuer_name": "RippleChina",
+			"issuer_address": "razqQKzJRdB4UxFPWf5NEpEG3WMkmwgcXA",
+			"currency": "CNY",
+			"exchange_ref": "CCN",
+			"char_ref": "i"
+		}
+
+		{	
+			"issuer_name": "Rippex",
+			"issuer_address": "rfNZPxoZ5Uaamdp339U9dCLWz2T73nZJZH",
+			"currency": "BRL",
+			"exchange_ref": "RBR",
+			"char_ref": "j"
+		}
+
+		{	
+			"issuer_name": "RippleFox",
+			"issuer_address": "rKiCet8SdvWxPXnAgYarFUXMh1zCPz432Y",
+			"currency": "CNY",
+			"exchange_ref": "FNY",
+			"char_ref": "k"
+		}
+
+
 	]
 }
