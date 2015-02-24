@@ -6,7 +6,7 @@
 			"currency": "USD",
 			"exchange_ref": "BUS",
 			"char_ref": "a"
-		}
+		},
 
 		{	
 			"issuer_name": "BitStamp",
@@ -14,7 +14,7 @@
 			"currency": "BTC",
 			"exchange_ref": "BBT",
 			"char_ref": "b"
-		}
+		},
 
 		{	
 			"issuer_name": "SnapSwap",
@@ -22,7 +22,7 @@
 			"currency": "USD",
 			"exchange_ref": "SUS",
 			"char_ref": "c"
-		}
+		},
 
 		{	
 			"issuer_name": "SnapSwap",
@@ -30,7 +30,7 @@
 			"currency": "BTC",
 			"exchange_ref": "SBT",
 			"char_ref": "d"
-		}
+		},
 
 		{	
 			"issuer_name": "SnapSwap",
@@ -38,7 +38,7 @@
 			"currency": "EUR",
 			"exchange_ref": "SEU",
 			"char_ref": "e"
-		}
+		},
 
 		{	
 			"issuer_name": "TokyoJPY",
@@ -46,7 +46,7 @@
 			"currency": "JPY",
 			"exchange_ref": "TJP",
 			"char_ref": "f"
-		}
+		},
 
 		{	
 			"issuer_name": "RippleCN",
@@ -54,7 +54,7 @@
 			"currency": "CNY",
 			"exchange_ref": "RCN",
 			"char_ref": "g"
-		}
+		},
 
 		{	
 			"issuer_name": "RippleTradeJapan",
@@ -62,7 +62,7 @@
 			"currency": "JPY",
 			"exchange_ref": "RJP",
 			"char_ref": "h"
-		}
+		},
 
 		{	
 			"issuer_name": "RippleChina",
@@ -70,7 +70,7 @@
 			"currency": "CNY",
 			"exchange_ref": "CCN",
 			"char_ref": "i"
-		}
+		},
 
 		{	
 			"issuer_name": "Rippex",
@@ -78,7 +78,7 @@
 			"currency": "BRL",
 			"exchange_ref": "RBR",
 			"char_ref": "j"
-		}
+		},
 
 		{	
 			"issuer_name": "RippleFox",
