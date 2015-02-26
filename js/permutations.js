@@ -1,4 +1,46 @@
-function generateAnagrams(word) {
+
+// Order doesn't matter
+var permutation = function (collection){
+    var current,
+    subarray,
+    result = [],
+    currentArray = [],
+    newResultArray = [];
+     
+    if (collection.length) {
+        current = collection.shift();
+        result = permutation(collection);
+        
+        currentArray.push(current);
+         
+        result.map(function(list) {
+            newResultArray.push(list.slice(0));
+            list.push(current);
+        });
+        
+        result.push(currentArray);
+        result = result.concat(newResultArray);
+    }
+    
+    return result;
+};
+
+exports.getPairs = function (collection) {
+    permutation = permutation(collection);
+    var pairs = [];
+    for (var i = 0; i < permutation.length; i ++) {
+        if (permutation[i].length == 2) {
+            pairs.push (permutation[i]);
+        }
+    }
+    return pairs;
+};
+
+//var result = permutation(['a', 'b', 'c', 'd']);
+//console.log (getPairs(result));
+
+// Order matters
+/*function generateAnagrams(word) {
 
     if (word.length < 2) {
         return [word];
@@ -37,13 +79,18 @@ function generatePairs(anagrams) {
 }
 
 function arrayContains(array, value) {
-	for (var i = 0; i < array.length; i ++) {
-		if (array[i] == value) {
-			return true;
-		}
-	}
-	return false;
+    for (var i = 0; i < array.length; i ++) {
+        if (array[i] == value) {
+            return true;
+        }
+    }
+    return false;
 }
 
-var result = generateAnagrams('abcd');
-console.log (generatePairs(result));
+//var result = generateAnagrams('abcd');
+//console.log (generatePairs(result));
+
+*/
+
+
+
