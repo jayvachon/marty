@@ -20,15 +20,28 @@ var BASE = {
 
 var TRADE = {
    'currency':'USD',
-   'issuer': 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q' // SnapSwap
+   'issuer': 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B', // BitStamp   
 }
 
 var mybook_bid = remote.book(BASE.currency, BASE.issuer, TRADE.currency, TRADE.issuer);
+var mybook_ask = remote.book(TRADE.currency, TRADE.issuer, BASE.currency, BASE.issuer);
 mybook_bid.on("model", handle_bids);
+mybook_ask.on("model", handle_asks);
 
 function handle_bids(offers) { 
   //console.log (offers[0]);
-  console.log (offers[0]["TakerPays"]["value"]);
+  //USD -> XRP
+  console.log ("Bid Total" + " " + offers[0]["TakerPays"]["value"] + " " + "Bid Price" + " " + ((1/(offers[0]["quality"]))/1000000));
+  console.log ("1 USD = " + ((1/(offers[0]["quality"]))/1000000) + " XRP");
+  //console.log ((1/(offers[0]["quality"]))/1000000);
+  //console.log ("Bid Price" + " " + ((1/(offers[0]["quality"]))/1000000));
+}
+
+function handle_asks(offers){
+  // XRP -> USD
+  console.log ("Ask Total" + " " + offers[0]["TakerGets"]["value"] + " " + "Ask Price" + " " + (1/(offers[0]["quality"])*1000000)); 
+  console.log ("1 XRP = " + (1/(offers[0]["quality"])*1000000) + " USD");
+  //console.log ((offers[0]["quality"])/1000000); 
 }
 
 // Transaction
