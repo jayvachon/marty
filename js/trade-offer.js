@@ -15,12 +15,14 @@ var remote = new ripple.Remote({
 // Orderbook
 var BASE = {
    'currency':'XRP',
-   'issuer': null
+   'issuer': null,
+   'exchange_ref': 'XRP'
 }
 
 var TRADE = {
    'currency':'USD',
-   'issuer': 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B', // BitStamp   
+   'issuer': 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B', // BitStamp  
+   'exchange_ref': 'BUS' 
 }
 
 var mybook_bid = remote.book(BASE.currency, BASE.issuer, TRADE.currency, TRADE.issuer);
@@ -31,17 +33,18 @@ mybook_ask.on("model", handle_asks);
 function handle_bids(offers) { 
   //console.log (offers[0]);
   //USD -> XRP
-  console.log ("Bid Total" + " " + offers[0]["TakerPays"]["value"] + " " + "Bid Price" + " " + ((1/(offers[0]["quality"]))/1000000));
+  //console.log ("Bid Total" + " " + offers[0]["TakerPays"]["value"] + " " + "Bid Price" + " " + ((1/(offers[0]["quality"]))/1000000));
   console.log ("1 USD = " + ((1/(offers[0]["quality"]))/1000000) + " XRP");
-  //console.log ((1/(offers[0]["quality"]))/1000000);
-  //console.log ("Bid Price" + " " + ((1/(offers[0]["quality"]))/1000000));
+  console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))/1000000) + " " + BASE.exchange_ref)
+
 }
 
 function handle_asks(offers){
   // XRP -> USD
-  console.log ("Ask Total" + " " + offers[0]["TakerGets"]["value"] + " " + "Ask Price" + " " + (1/(offers[0]["quality"])*1000000)); 
+  //console.log ("Ask Total" + " " + offers[0]["TakerGets"]["value"] + " " + "Ask Price" + " " + (1/(offers[0]["quality"])*1000000)); 
   console.log ("1 XRP = " + (1/(offers[0]["quality"])*1000000) + " USD");
-  //console.log ((offers[0]["quality"])/1000000); 
+  console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.exchange_ref)
+
 }
 
 // Transaction
