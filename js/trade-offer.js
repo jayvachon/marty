@@ -34,16 +34,28 @@ function handle_bids(offers) {
   //console.log (offers[0]);
   //USD -> XRP
   //console.log ("Bid Total" + " " + offers[0]["TakerPays"]["value"] + " " + "Bid Price" + " " + ((1/(offers[0]["quality"]))/1000000));
-  console.log ("1 USD = " + ((1/(offers[0]["quality"]))/1000000) + " XRP");
-  console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))/1000000) + " " + BASE.exchange_ref)
+  if(BASE.currency == 'XRP' || TRADE.currency == 'XRP'){
+    console.log ("1 " + TRADE.currency + " = " + ((1/(offers[0]["quality"]))/1000000) + " " + BASE.currency);
+    console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))/1000000) + " " + BASE.exchange_ref)
+  }
+  else{
+    console.log ("1 " + TRADE.currency + " = " + ((1/(offers[0]["quality"]))) + " " + BASE.currency);
+    console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))) + " " + BASE.exchange_ref)
+  }  
 
 }
 
 function handle_asks(offers){
   // XRP -> USD
-  //console.log ("Ask Total" + " " + offers[0]["TakerGets"]["value"] + " " + "Ask Price" + " " + (1/(offers[0]["quality"])*1000000)); 
-  console.log ("1 XRP = " + (1/(offers[0]["quality"])*1000000) + " USD");
-  console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.exchange_ref)
+  //console.log ("Ask Total" + " " + offers[0]["TakerGets"]["value"] + " " + "Ask Price" + " " + (1/(offers[0]["quality"])*1000000));
+  if(BASE.currency == 'XRP' || TRADE.currency == 'XRP'){ 
+    console.log ("1 " + BASE.currency + " = " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.currency);
+    console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.exchange_ref)
+  }
+  else{
+    console.log ("1 " + BASE.currency + " = " + (1/(offers[0]["quality"])) + " " + TRADE.currency);
+    console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])) + " " + TRADE.exchange_ref)
+  }  
 
 }
 
