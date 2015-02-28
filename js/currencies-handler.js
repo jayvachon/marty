@@ -1,6 +1,6 @@
 
 var fs = require('fs');
-var currencies = JSON.parse(fs.readFileSync('currencies.json', 'utf8'))['currencies'];
+var currencies = JSON.parse(fs.readFileSync('../currencies.json', 'utf8'))['currencies'];
 
 exports.getPairs = function (orderMatters) {
 	var pairs = [];
