@@ -11,24 +11,31 @@ var remote = new ripple.Remote({
 /* Loading ripple-lib Remote and Amount modules in a webpage */
 // var Remote = ripple.Remote;
 // var Amount = ripple.Amount;
+//var array = []
+  var CURRENCY = process.argv[2];
+  var ISSUER = process.argv[3];
 
+
+//for (var i = 0; i < array.length; i++){
 // Orderbook
-var BASE = {
-   'currency':'XRP',
-   'issuer': null,
-   'exchange_ref': 'XRP'
-}
+  var BASE = {
+    // 'currency':'XRP',
+    'currency':CURRENCY,
+     //'issuer': null,
+     'issuer': ISSUER,
+     'exchange_ref': 'XRP'
+  }
 
-var TRADE = {
-   'currency':'USD',
-   'issuer': 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B', // BitStamp  
-   'exchange_ref': 'BUS' 
-}
+  var TRADE = {
+     'currency':'USD',
+     'issuer': 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B', // BitStamp  
+     'exchange_ref': 'BUS' 
+  }
 
-var mybook_bid = remote.book(BASE.currency, BASE.issuer, TRADE.currency, TRADE.issuer);
-var mybook_ask = remote.book(TRADE.currency, TRADE.issuer, BASE.currency, BASE.issuer);
-mybook_bid.on("model", handle_bids);
-mybook_ask.on("model", handle_asks);
+  var mybook_bid = remote.book(BASE.currency, BASE.issuer, TRADE.currency, TRADE.issuer);
+  var mybook_ask = remote.book(TRADE.currency, TRADE.issuer, BASE.currency, BASE.issuer);
+  mybook_bid.on("model", handle_bids);
+  mybook_ask.on("model", handle_asks);
 
 function handle_bids(offers) { 
   //console.log (offers[0]);
@@ -36,11 +43,11 @@ function handle_bids(offers) {
   //console.log ("Bid Total" + " " + offers[0]["TakerPays"]["value"] + " " + "Bid Price" + " " + ((1/(offers[0]["quality"]))/1000000));
   if(BASE.currency == 'XRP' || TRADE.currency == 'XRP'){
     console.log ("1 " + TRADE.currency + " = " + ((1/(offers[0]["quality"]))/1000000) + " " + BASE.currency);
-    console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))/1000000) + " " + BASE.exchange_ref)
+    //console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))/1000000) + " " + BASE.exchange_ref)
   }
   else{
     console.log ("1 " + TRADE.currency + " = " + ((1/(offers[0]["quality"]))) + " " + BASE.currency);
-    console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))) + " " + BASE.exchange_ref)
+    //console.log (TRADE.exchange_ref + " " + ((1/(offers[0]["quality"]))) + " " + BASE.exchange_ref)
   }  
 
 }
@@ -49,12 +56,12 @@ function handle_asks(offers){
   // XRP -> USD
   //console.log ("Ask Total" + " " + offers[0]["TakerGets"]["value"] + " " + "Ask Price" + " " + (1/(offers[0]["quality"])*1000000));
   if(BASE.currency == 'XRP' || TRADE.currency == 'XRP'){ 
-    console.log ("1 " + BASE.currency + " = " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.currency);
-    console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.exchange_ref)
+   console.log ("1 " + BASE.currency + " = " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.currency);
+   //console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])*1000000) + " " + TRADE.exchange_ref)
   }
   else{
-    console.log ("1 " + BASE.currency + " = " + (1/(offers[0]["quality"])) + " " + TRADE.currency);
-    console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])) + " " + TRADE.exchange_ref)
+   console.log ("1 " + BASE.currency + " = " + (1/(offers[0]["quality"])) + " " + TRADE.currency);
+    //console.log (BASE.exchange_ref + " " + (1/(offers[0]["quality"])) + " " + TRADE.exchange_ref)
   }  
 
 }
