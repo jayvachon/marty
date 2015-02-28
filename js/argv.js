@@ -1,4 +1,4 @@
-console.log(process.argv[0]);
+console.log(process.argv[2]);
 
 //var currencies = ["CAD","BTC","USD"]
 //var RUnion = "r3ADD8kXSUKHd6zTCKfnKT3zV9EZHjzp1S"
