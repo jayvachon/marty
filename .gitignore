@@ -1,5 +1,6 @@
 .DS_Store
 keys/
 wallets/
+node_modules/
 *.sublime-project
 *.sublime-workspace
