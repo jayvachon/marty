@@ -26,9 +26,11 @@ function handle_bids(offers) {
 		var takerGets = offer['TakerGets'];
 		var getsCurrency = takerGets['currency'];
 		var getsIssuer = takerGets['issuer'];
+		var quality = offer['TakerGets']['value']/offer['TakerPays']['value'];
 		if (paysCurrency == 'USD' && paysIssuer == 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q' && getsCurrency == 'USD' && getsIssuer == 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B') {
-			console.log("BIDS");
-			console.log (offer);
+			//console.log("BIDS");
+			//console.log (offer);
+			console.log("1 USD SnapSwap = " + quality + " USD Bitstamp")
 		}
 	}
 }
@@ -43,9 +45,11 @@ function handle_asks(offers) {
 		var takerGets = offer['TakerGets'];
 		var getsCurrency = takerGets['currency'];
 		var getsIssuer = takerGets['issuer'];
+		var quality = 1/(offer['TakerPays']['value']/offer['TakerGets']['value']);
 		if (paysCurrency == 'USD' && paysIssuer == 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B' && getsCurrency == 'USD' && getsIssuer == 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q') {
-			console.log("ASKS");
-			console.log (offer);
+			//console.log("ASKS");
+			//console.log (offer);
+			console.log("1 USD BitStamp = " + quality + ' USD SnapSwap');
 		}
 	}
 }
