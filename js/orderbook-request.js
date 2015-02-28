@@ -17,9 +17,35 @@ exports.getAskBid = function (remote, base, trade) {
 };
 
 function handle_bids(offers) {
-	console.log(offers[0]);
+	var offer = offers[0];
+	if (offer !== undefined) {
+		var takerPays = offer['TakerPays'];
+		var paysCurrency = takerPays['currency'];
+		var paysIssuer = takerPays['issuer'];
+
+		var takerGets = offer['TakerGets'];
+		var getsCurrency = takerGets['currency'];
+		var getsIssuer = takerGets['issuer'];
+		if (paysCurrency == 'USD' && paysIssuer == 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q' && getsCurrency == 'USD' && getsIssuer == 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B') {
+			console.log("BIDS");
+			console.log (offer);
+		}
+	}
 }
 
 function handle_asks(offers) {
-	console.log(offers[0]);
+	var offer = offers[0];
+	if (offer !== undefined) {
+		var takerPays = offer['TakerPays'];
+		var paysCurrency = takerPays['currency'];
+		var paysIssuer = takerPays['issuer'];
+
+		var takerGets = offer['TakerGets'];
+		var getsCurrency = takerGets['currency'];
+		var getsIssuer = takerGets['issuer'];
+		if (paysCurrency == 'USD' && paysIssuer == 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B' && getsCurrency == 'USD' && getsIssuer == 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q') {
+			console.log("ASKS");
+			console.log (offer);
+		}
+	}
 }
