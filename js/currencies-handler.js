@@ -11,7 +11,7 @@ exports.getPairs = function (orderMatters) {
 		}
 	}
 	if (orderMatters) {
-		for (var i = 0; i < pairs.length; i ++) {
+		for (i = 0; i < pairs.length; i ++) {
 			var pair = pairs[i];
 			pairs.push ([pair[1], pair[0]]);
 		}
@@ -27,3 +27,11 @@ exports.getCurrencyAttributes = function (currency, attributes) {
 	return return_attributes;
 };
 
+exports.findExchangeRef = function (currency, issuerAddress) {
+	for (var i = 0; i < currencies.length; i ++) {
+		var thisCurrency = currencies[i];
+		if (thisCurrency['currency'] == currency && thisCurrency['issuer_address'] == issuerAddress) {
+			return thisCurrency['exchange_ref'];
+		}
+	}
+};

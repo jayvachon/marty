@@ -17,7 +17,7 @@ function sendPairsToOrderbook () {
 		var trade = currenciesHandler.getCurrencyAttributes (pair[1], ['currency', 'issuer_address', 'exchange_ref']);
 		orderbook.getAskBid (remote, base, trade);
 	}
-};
+}
 
 // Transaction
 var MY_ADDRESS = '';

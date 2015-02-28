@@ -1,4 +1,6 @@
 
+var currenciesHandler = require('./currencies-handler');
+
 exports.getAskBid = function (remote, base, trade) {
 	var BASE = {
 		'currency': base[0],
@@ -16,40 +18,49 @@ exports.getAskBid = function (remote, base, trade) {
 	mybook_ask.on("model", handle_asks);
 };
 
+function formatOffer (offer, takerType, bid) {
+	
+	var taker = offer[takerType];
+	var currency = taker['currency'];
+	var issuer = taker['issuer'];
+	var value = taker['value'];
+
+	// XRP special case
+	if (typeof taker == 'string') {
+		currency = 'XRP';
+		issuer = null;
+		if (bid) {
+			value = taker /= 1000000;
+		} else {
+			value = taker *= 1000000;
+		}
+	}
+
+	var exchangeRef = currenciesHandler.findExchangeRef (currency, issuer);
+	return {
+		value: value,
+		exchangeRef: exchangeRef
+	};
+}
+
 function handle_bids(offers) {
 	var offer = offers[0];
 	if (offer !== undefined) {
-		var takerPays = offer['TakerPays'];
-		var paysCurrency = takerPays['currency'];
-		var paysIssuer = takerPays['issuer'];
-
-		var takerGets = offer['TakerGets'];
-		var getsCurrency = takerGets['currency'];
-		var getsIssuer = takerGets['issuer'];
-		var quality = offer['TakerGets']['value']/offer['TakerPays']['value'];
-		if (paysCurrency == 'USD' && paysIssuer == 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q' && getsCurrency == 'USD' && getsIssuer == 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B') {
-			//console.log("BIDS");
-			//console.log (offer);
-			console.log("1 USD SnapSwap = " + quality + " USD Bitstamp")
-		}
+		var pays = formatOffer (offer, 'TakerPays', true);
+		var gets = formatOffer (offer, 'TakerGets', true);
+		var quality = gets['value'] / pays['value'];
+		console.log ('BID:');
+		console.log (pays['exchangeRef'] + " " + quality + " " + gets['exchangeRef']);
 	}
 }
 
 function handle_asks(offers) {
 	var offer = offers[0];
 	if (offer !== undefined) {
-		var takerPays = offer['TakerPays'];
-		var paysCurrency = takerPays['currency'];
-		var paysIssuer = takerPays['issuer'];
-
-		var takerGets = offer['TakerGets'];
-		var getsCurrency = takerGets['currency'];
-		var getsIssuer = takerGets['issuer'];
-		var quality = 1/(offer['TakerPays']['value']/offer['TakerGets']['value']);
-		if (paysCurrency == 'USD' && paysIssuer == 'rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B' && getsCurrency == 'USD' && getsIssuer == 'rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q') {
-			//console.log("ASKS");
-			//console.log (offer);
-			console.log("1 USD BitStamp = " + quality + ' USD SnapSwap');
-		}
+		var pays = formatOffer (offer, 'TakerPays', false);
+		var gets = formatOffer (offer, 'TakerGets', false);
+		var quality = 1 / pays['value'] / gets['value'];
+		console.log ('ASK:');
+		console.log (gets['exchangeRef'] + " " + quality + " " + pays['exchangeRef']);
 	}
 }

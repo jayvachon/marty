@@ -1,4 +1,4 @@
-var request = new require('request');
+var request = new require('../node_modules/request');
 
 request({
   method: 'POST',
