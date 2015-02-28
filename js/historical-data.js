@@ -1,4 +1,6 @@
-var request = new require('../node_modules/request');
+
+
+var request = require('request');
 
 request({
   method: 'POST',
@@ -6,18 +8,15 @@ request({
   headers: {
     'Content-Type': 'application/json'
   },
-// base Bitstamp
-// counter Snapswap
-
-  body: {
+  body: "{
     pairs : [
         {
-            base    : {currency:"USD","issuer":"rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B"}, 
-            counter : {currency:"USD","issuer":"rMwjYedjc7qqtKYVLiAccJSmCwih4LnE2q"}
+            base    : {currency:\"CNY\",\"issuer\":\"rnuF96W4SZoCJmbHYBFoJZpR8eCaxNvekK\"},
+            counter : {currency:\"XRP\"}
         }
     ],
-    range : "day"
-}
+    range : \"day\"
+}"
 }, function (error, response, body) {
   console.log('Status:', response.statusCode);
   console.log('Headers:', JSON.stringify(response.headers));

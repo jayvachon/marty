@@ -1,5 +1,7 @@
 
+var exec = require ('child_process').exec;
 var currenciesHandler = require('./currencies-handler');
+var rates = [];
 
 exports.getAskBid = function (remote, base, trade) {
 	var BASE = {
@@ -14,11 +16,11 @@ exports.getAskBid = function (remote, base, trade) {
 	};
 	var mybook_bid = remote.book(BASE.currency, BASE.issuer, TRADE.currency, TRADE.issuer);
 	var mybook_ask = remote.book(TRADE.currency, TRADE.issuer, BASE.currency, BASE.issuer);
-	mybook_bid.on("model", handle_bids);
-	mybook_ask.on("model", handle_asks);
+	mybook_bid.on("model", handleBids);
+	mybook_ask.on("model", handleAsks);
 };
 
-function formatOffer (offer, takerType, bid) {
+function formatOffer (offer, takerType) {
 	
 	var taker = offer[takerType];
 	var currency = taker['currency'];
@@ -29,11 +31,7 @@ function formatOffer (offer, takerType, bid) {
 	if (typeof taker == 'string') {
 		currency = 'XRP';
 		issuer = null;
-		if (bid) {
-			value = taker /= 1000000;
-		} else {
-			value = taker *= 1000000;
-		}
+		value = taker / 1000000;
 	}
 
 	var exchangeRef = currenciesHandler.findExchangeRef (currency, issuer);
@@ -43,24 +41,57 @@ function formatOffer (offer, takerType, bid) {
 	};
 }
 
-function handle_bids(offers) {
+function handleBids(offers) {
 	var offer = offers[0];
 	if (offer !== undefined) {
-		var pays = formatOffer (offer, 'TakerPays', true);
-		var gets = formatOffer (offer, 'TakerGets', true);
+		var pays = formatOffer (offer, 'TakerPays');
+		var gets = formatOffer (offer, 'TakerGets');
 		var quality = gets['value'] / pays['value'];
-		console.log ('BID:');
-		console.log (pays['exchangeRef'] + " " + quality + " " + gets['exchangeRef']);
+		addRate (pays['exchangeRef'], gets['exchangeRef'], quality);
 	}
 }
 
-function handle_asks(offers) {
+function handleAsks(offers) {
 	var offer = offers[0];
 	if (offer !== undefined) {
-		var pays = formatOffer (offer, 'TakerPays', false);
-		var gets = formatOffer (offer, 'TakerGets', false);
-		var quality = 1 / pays['value'] / gets['value'];
-		console.log ('ASK:');
-		console.log (gets['exchangeRef'] + " " + quality + " " + pays['exchangeRef']);
+		var pays = formatOffer (offer, 'TakerPays');
+		var gets = formatOffer (offer, 'TakerGets');
+		var quality = 1 / (pays['value'] / gets['value']);
+		addRate (pays['exchangeRef'], gets['exchangeRef'], quality);
 	}
+}
+
+function addRate (paysRef, getsRef, quality) {
+	var rate = findRate (paysRef, getsRef);
+	var newRate = {
+		'paysRef': paysRef,
+		'getsRef': getsRef,
+		'exchange': paysRef + " " + quality + " " + getsRef
+	};
+	if (rate === null) {
+		rates.push (newRate);
+	} else {
+		rate = newRate;
+	}
+	sendRates ();
+}
+
+function findRate (paysRef, getsRef) {
+	for (var i = 0; i < rates.length; i ++) {
+		var rate = rates[i];
+		if (rate['paysRef'] == paysRef && rate['getsRef'] == getsRef) {
+			return rate;
+		}
+	}
+	return null;
+}
+
+function sendRates () {
+	var outRates = "";
+	for (var i = 0; i < rates.length; i ++) {
+		outRates += rates[i]['exchange'] + '\n';
+	}
+	exec ('ruby ../rb/monkey.rb "' + outRates + '"', function (err, stdout, stdin) {
+		console.log (stdout);
+	});
 }

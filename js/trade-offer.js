@@ -4,8 +4,8 @@ var Amount = require('ripple-lib').Amount;
 
 var remote = new ripple.Remote({
 	servers: [
-		{ host: 's1.ripple.com', port: 443, secure: true }
-  	]
+    { host: 's1.ripple.com', port: 443, secure: true }
+  ]
 });
 
 /* Loading ripple-lib Remote and Amount modules in a webpage */

@@ -1,9 +1,9 @@
 
 var fs = require('fs');
 var currencies = JSON.parse(fs.readFileSync('../currencies.json', 'utf8'))['currencies'];
+var pairs = [];
 
 exports.getPairs = function (orderMatters) {
-	var pairs = [];
 	for (var i = 0; i < currencies.length; i ++) {
 		var firstPair = currencies[i];
 		for (var j = i+1; j < currencies.length; j ++) {
