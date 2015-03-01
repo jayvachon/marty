@@ -35,3 +35,15 @@ exports.findExchangeRef = function (currency, issuerAddress) {
 		}
 	}
 };
+
+exports.findCurrencyAndGateway = function (exchangeRef) {
+	for (var i = 0; i < currencies.length; i ++) {
+		var thisCurrency = currencies[i];
+		if (thisCurrency['exchange_ref'] == exchangeRef) {
+			return {
+				'currency': thisCurrency['currency'],
+				'gateway': thisCurrency['issuer_address']
+			};
+		}
+	}
+}

@@ -1,6 +1,6 @@
 
-var exec = require ('child_process').exec;
 var currenciesHandler = require('./currencies-handler');
+var marty = require('./marty');
 var rates = [];
 
 exports.getAskBid = function (remote, base, trade) {
@@ -47,7 +47,7 @@ function handleBids(offers) {
 		var pays = formatOffer (offer, 'TakerPays');
 		var gets = formatOffer (offer, 'TakerGets');
 		var quality = gets['value'] / pays['value'];
-		addRate (pays['exchangeRef'], gets['exchangeRef'], quality);
+		addRate (pays['exchangeRef'], gets['exchangeRef'], quality, pays['value'], gets['value']);
 	}
 }
 
@@ -57,23 +57,25 @@ function handleAsks(offers) {
 		var pays = formatOffer (offer, 'TakerPays');
 		var gets = formatOffer (offer, 'TakerGets');
 		var quality = 1 / (pays['value'] / gets['value']);
-		addRate (pays['exchangeRef'], gets['exchangeRef'], quality);
+		addRate (pays['exchangeRef'], gets['exchangeRef'], quality, pays['value'], gets['value']);
 	}
 }
 
-function addRate (paysRef, getsRef, quality) {
+function addRate (paysRef, getsRef, quality, paysValue, getsValue) {
 	var rate = findRate (paysRef, getsRef);
 	var newRate = {
 		'paysRef': paysRef,
 		'getsRef': getsRef,
-		'exchange': paysRef + " " + quality + " " + getsRef
+		'exchange': paysRef + " " + quality + " " + getsRef,
+		'paysValue': paysValue,
+		'getsValue': getsValue
 	};
 	if (rate === null) {
 		rates.push (newRate);
 	} else {
 		rate = newRate;
 	}
-	sendRates ();
+	marty.sendRates (rates);
 }
 
 function findRate (paysRef, getsRef) {
@@ -86,12 +88,6 @@ function findRate (paysRef, getsRef) {
 	return null;
 }
 
-function sendRates () {
-	var outRates = "";
-	for (var i = 0; i < rates.length; i ++) {
-		outRates += rates[i]['exchange'] + '\n';
-	}
-	exec ('ruby ../rb/monkey.rb "' + outRates + '"', function (err, stdout, stdin) {
-		console.log (stdout);
-	});
-}
+exports.findRate = function (paysRef, getsRef) {
+	return findRate (paysRef, getsRef);
+};
