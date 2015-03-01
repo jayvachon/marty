@@ -7,3 +7,4 @@ dependencies:
 * request
 * require
 
+install ruby & node too
