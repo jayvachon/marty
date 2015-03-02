@@ -93,7 +93,6 @@ function addXRPExchangeRate (paysRef, quality) {
 	} else {
 		xrpExchangeRate = newXRPExchangeRate;
 	}
-	console.log (newXRPExchangeRate);
 }
 
 function findRate (paysRef, getsRef) {
@@ -107,7 +106,7 @@ function findRate (paysRef, getsRef) {
 }
 
 function findXRPExchangeRate (paysRef) {
-	for (var i = 0; i < xrpExchangeRates; i ++) {
+	for (var i = 0; i < xrpExchangeRates.length; i ++) {
 		var xrpExchangeRate = xrpExchangeRates[i];
 		if (xrpExchangeRate['paysRef'] == paysRef) {
 			return xrpExchangeRate;
@@ -118,4 +117,13 @@ function findXRPExchangeRate (paysRef) {
 
 exports.findRate = function (paysRef, getsRef) {
 	return findRate (paysRef, getsRef);
+};
+
+exports.findXRPExchangeRate = function (paysRef) {
+	var xrpExchangeRate = findXRPExchangeRate (paysRef);
+	if (xrpExchangeRate === null) {
+		return 0;
+	} else {
+		return xrpExchangeRate['quality'];
+	}
 };

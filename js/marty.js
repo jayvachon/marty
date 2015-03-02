@@ -31,8 +31,8 @@ exports.sendRates = function (rates) {
 	}
 	//console.log (outRates);
 	exec ('ruby ../rb/monkey.rb "' + outRates + '"', function (err, stdout, stdin) {
-		console.log(stdout);
 		if (stdout === "No arbitrage found.\n" || stdout === "") {
+			console.log(stdout);
 			return;
 		} else {
 			var paths = stdout.split('\n');
@@ -55,10 +55,12 @@ function submitTransactionsAlongPath (path) {
 		return;
 	}
 
+	console.log (getPathInXRP (currencies));
+
 	// get the maximum value that can be passed along the path
 	// and if the value is too small, don't use the path
-	var maxValue = getMaximumValue (currencies); // should be based on xrp
-	//if (maxValue >= 10) {
+	/*var maxValue = getMaximumValue (currencies); // should be based on xrp
+	if (maxValue >= 10) {
 		for (i = 0; i < currencies.length-1; i ++) {
 			var rate = orderbook.findRate (currencies[i], currencies[i+1]);
 			console.log (rate);
@@ -72,10 +74,29 @@ function submitTransactionsAlongPath (path) {
 			//console.log (takerGets);
 			//submitTransaction (takerPays, takerGets);
 		}
-	//}
+	}*/
 }
 
-function getMaximumValue (path) {
+function getPathInXRP (path) {
+	var xrpVals = [];
+	for (var i = 0; i < path.length-1; i ++) {
+		var rate = orderbook.findRate (path[i], path[i+1]);
+		if (rate['getsRef'] == 'XRP') {
+			xrpVals.push (rate['getsValue']);
+		} else {
+			var paysRef = rate['paysRef'];
+			var paysVal = rate['paysValue'];
+			if (paysRef == 'XRP') {
+				xrpVals.push (paysVal);
+			} else {
+				xrpVals.push (paysVal * orderbook.findXRPExchangeRate (paysRef));
+			}
+		}
+	}
+	return xrpVals;
+}
+
+/*function getMaximumValue (path) {
 	//use pays val
 	var maxVal = 1000000000;
 	for (var i = 0; i < path.length-1; i ++) {
@@ -85,7 +106,7 @@ function getMaximumValue (path) {
 		}
 	}
 	return maxVal;
-}
+}*/
 
 function submitTransaction (takerPays, takerGets) {
 	
