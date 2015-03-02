@@ -2,6 +2,7 @@
 var currenciesHandler = require('./currencies-handler');
 var marty = require('./marty');
 var rates = [];
+var xrpExchangeRates = [];
 
 exports.getAskBid = function (remote, base, trade) {
 	var BASE = {
@@ -75,7 +76,24 @@ function addRate (paysRef, getsRef, quality, paysValue, getsValue) {
 	} else {
 		rate = newRate;
 	}
+	if (getsRef == 'XRP') {
+		addXRPExchangeRate (paysRef, quality);
+	}
 	marty.sendRates (rates);
+}
+
+function addXRPExchangeRate (paysRef, quality) {
+	var xrpExchangeRate = findXRPExchangeRate (paysRef);
+	var newXRPExchangeRate = {
+		'paysRef': paysRef,
+		'quality': quality
+	};
+	if (xrpExchangeRate === null) {
+		xrpExchangeRates.push (newXRPExchangeRate);
+	} else {
+		xrpExchangeRate = newXRPExchangeRate;
+	}
+	console.log (newXRPExchangeRate);
 }
 
 function findRate (paysRef, getsRef) {
@@ -83,6 +101,16 @@ function findRate (paysRef, getsRef) {
 		var rate = rates[i];
 		if (rate['paysRef'] == paysRef && rate['getsRef'] == getsRef) {
 			return rate;
+		}
+	}
+	return null;
+}
+
+function findXRPExchangeRate (paysRef) {
+	for (var i = 0; i < xrpExchangeRates; i ++) {
+		var xrpExchangeRate = xrpExchangeRates[i];
+		if (xrpExchangeRate['paysRef'] == paysRef) {
+			return xrpExchangeRate;
 		}
 	}
 	return null;
